@@ -53,9 +53,13 @@
       },
       addObservations() {
         this.observations.forEach(obs => {
+          let color = 'purple';
+          if ('color' in obs) {
+            color = obs.color;
+          }
           const marker = L.circle([obs.lat, obs.lng], {
-            color: 'purple',
-            fillColor: 'purple',
+            color: color,
+            fillColor: color,
             fillOpacity: 0.5,
             radius: 2000
           }).addTo(this.map);

@@ -10,6 +10,20 @@
       </li>
     </ul>
     <router-view/>
+    <div class="nav footStyle">
+      <p class="aboutHome">
+        All data is fetched from the
+        <a href="https://documenter.getpostman.com/view/664302/ebird-api-20/2HTbHW#3833c40c-9733-dd2a-94e0-abcdd6938f0e">
+          eBird API 2.0
+        </a>
+        provided by
+        <a href="https://ebird.org/">eBird.org</a>
+        and the
+        <a href="http://www.birds.cornell.edu/">
+          Cornell Lab of Ornithology
+        </a>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -20,7 +34,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: whitesmoke;
-  background: #0070E5;
 }
 
 h2 {
@@ -28,7 +41,7 @@ h2 {
 }
 .nav {
   padding: 10px;
-  background: #0070E5;
+  background: #314354;
   a {
     font-weight: bold;
     color: whitesmoke;
@@ -37,5 +50,13 @@ h2 {
     }
   }
 }
+.footStyle{
+  height: 75px;
 
+}
+  .aboutHome {
+    margin: 0 auto;
+    text-align: center;
+    /*width: 700px;*/
+  }
 </style>

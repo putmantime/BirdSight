@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid fullBackground">
     <div class="row">
-      <div class="col-3 p-3">
+      <div class="col-3 leftColumn">
         <div class="card selectionArea">
           <div class="card-body p-2 mapHeader" style="height: 300px;">
             <h3>Region Search:</h3>
@@ -23,12 +23,12 @@
           </div>
         </div>
       </div>
-      <div class="col-9 p-3">
+      <div class="col-9 rightColumn">
         <div class="card">
           <div class="card-header mapHeader" style="text-align: left">
            <div class="row">
-             <div class="col-6"><h3>Region:</h3><h2>{{region.name}}</h2></div>
-             <div class="col-6"><h3>Observations:</h3> <h2 v-html="observationMessage"></h2></div></div>
+             <div class="col-3"><h3>Region:</h3><h2>{{region.name}}</h2></div>
+             <div class="col-9"><h3>Observations:</h3> <h2 v-html="observationMessage"></h2></div></div>
           </div>
           <div v-if="observations.length"
                class=" card-body p-0">
@@ -91,6 +91,7 @@
           searchResponse.forEach(bird => {
             this.observations.push(bird)
           });
+          this.assignColor();
           searchResponse = null
         }
         catch (e) {
@@ -111,10 +112,31 @@
         }
       },
       notableClick() {
-        this.observationMessage = '<p>All recent notable observations</p>';
-        this.currentSpecies = '';
-        this.speciesInfo = '';
-        this.fetchRecentNotableSightings();
+        this.$router.go(this.$router.currentRoute);
+        // this.observationMessage = '<p>All recent notable observations</p>';
+        // this.currentSpecies = '';
+        // this.speciesInfo = '';
+        // this.fetchRecentNotableSightings();
+      },
+      randomColor() {
+        const colorTemlate = [0,0,0,0,0,0];
+        let hexColor = colorTemlate.map((value, index, array) => {
+          return [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)];
+        });
+        return `#${hexColor.join('')}`;
+      },
+
+      assignColor() {
+        let birds = this.observations.map(bird => {
+          return bird.speciesCode;
+        });
+        const uniqueBirds = {};
+        [...new Set(birds)].forEach(bird => {
+          uniqueBirds[bird] = this.randomColor();
+        });
+        this.observations.forEach(bird => {
+          bird.color = uniqueBirds[bird.speciesCode]
+        });
       },
     },
     watch: {
@@ -181,4 +203,17 @@
   .card {
     border: solid #007CFF 1px;
   }
+  .leftColumn {
+    padding-top: 5px;
+    padding-right: 2px;
+    padding-bottom: 5px;
+    padding-left: 3px;
+  }
+  .rightColumn {
+    padding-top: 5px;
+    padding-left: 3px;
+    padding-right: 2px;
+    padding-bottom: 5px;
+  }
+
 </style>
