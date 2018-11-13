@@ -2,10 +2,11 @@
   <div id="app">
     <ul class="nav">
       <li class="nav-item">
-        <router-link class="nav-link active" to="/">Home</router-link>
+        <router-link class="nav-link"
+                     to="/"><strong>US Bird Observations</strong></router-link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/about">About</a>
+        <router-link class="nav-link" to="/about">About</router-link>
       </li>
     </ul>
     <router-view/>
@@ -18,16 +19,23 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: whitesmoke;
+  background: #0070E5;
 }
-#nav {
-  padding: 30px;
+
+h2 {
+  color: whitesmoke;
+}
+.nav {
+  padding: 10px;
+  background: #0070E5;
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: whitesmoke;
     &.router-link-exact-active {
-      color: #42b983;
+      color: whitesmoke;
     }
   }
 }
+
 </style>

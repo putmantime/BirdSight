@@ -1,36 +1,34 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
-        <h1>TweetyMap</h1>
-      </div>
-      <div class="col-1"></div>
-    </div>
+  <div class="container-fluid fullBackground">
     <div class="row">
       <div class="col-3 p-3">
         <div class="card selectionArea">
-          <div class="card-body p-2" style="height: 300px;">
-            Region Search:
+          <div class="card-body p-2 mapHeader" style="height: 300px;">
+            <h3>Region Search:</h3>
             <region-search @interface="regionHandler"
                            :regionCode="this.urlRegion"
             ></region-search>
           </div>
-          <div class="card-body p-2" style="height: 300px">
-            Species Search:
+          <div class="card-body p-2 mapHeader" style="height: 300px">
+            <h3>Species Search:</h3>
             <species-search @interface="speciesHandler"
                             :region="region"
             >
             </species-search>
+            <div class="btn btn-outline-warning my-1"
+                 v-if="currentSpecies"
+                 @click="notableClick()">
+              All Notable
+            </div>
           </div>
         </div>
       </div>
       <div class="col-9 p-3">
         <div class="card">
-          <div class="card-header" style="text-align: left">
+          <div class="card-header mapHeader" style="text-align: left">
            <div class="row">
-             <div class="col-6">Region: <br/><strong>{{region.name}}</strong></div>
-             <div class="col-6">Observations: <p v-html="observationMessage"></p></div></div>
+             <div class="col-6"><h3>Region:</h3><h2>{{region.name}}</h2></div>
+             <div class="col-6"><h3>Observations:</h3> <h2 v-html="observationMessage"></h2></div></div>
           </div>
           <div v-if="observations.length"
                class=" card-body p-0">
@@ -40,7 +38,6 @@
           </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -113,6 +110,12 @@
           console.log('nodeResponse ERROR', e, this);
         }
       },
+      notableClick() {
+        this.observationMessage = '<p>All recent notable observations</p>';
+        this.currentSpecies = '';
+        this.speciesInfo = '';
+        this.fetchRecentNotableSightings();
+      },
     },
     watch: {
       currentSpecies() {
@@ -129,7 +132,7 @@
         this.currentSpecies = '';
         this.speciesInfo = '';
         this.fetchRecentNotableSightings();
-      }
+      },
     },
     mounted() {
       if ('region' in this.$route.params) {
@@ -150,8 +153,9 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1, h2 {
+  h1, h2, h3 {
     font-weight: normal;
+    color: whitesmoke;
   }
   ul {
     list-style-type: none;
@@ -167,5 +171,14 @@
   .selectionArea {
     text-align: left;
     height: 100%;
+  }
+  .fullBackground {
+    background: #003E7F;
+  }
+  .mapHeader {
+    background: #005DBF;
+  }
+  .card {
+    border: solid #007CFF 1px;
   }
 </style>
